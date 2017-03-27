@@ -94,6 +94,10 @@ class Population:
         self.individuals = new_generation
 
     def mutation(self):
+        for individual in self.individuals:
+            rnd = random.random()
+            if rnd <= Population.mp:
+                mutations.rsm(individual.chromosome)
 
     def fittest(self):
         elite = self.individuals[0]
