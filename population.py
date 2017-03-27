@@ -67,14 +67,47 @@ class Population:
 
         self.individuals = selected_individuals
 
-    def crossover(self, pc):
-        for index in range(0, len(self.individuals), 2):
+    def crossover(self):
+        new_generation = [self.fittest()]
+        for index in range(len(self.individuals) - 1):
             rnd = random.random()
-            if rnd <= pc:
-                child1, child2 = crossovers.aox_2(self.individuals[index].chromosome,
-                                                  self.individuals[index+1].chromosome)
-                self.individuals.append(Individual(child1))
-                self.individuals.append(Individual(child2))
+            if rnd <= Population.cp:
+                child = crossovers.aox(self.individuals[index].chromosome, self.individuals[index+1].chromosome)
+                new_generation.append(Individual(child))
+            else:
+                if rnd <= 0.5:
+                    new_generation.append(self.individuals[index])
+                else:
+                    new_generation.append(self.individuals[index+1])
+        rnd = random.random()
+
+        # crossover du dernier et premier
+        if rnd <= Population.cp:
+            child = crossovers.aox(self.individuals[-1].chromosome, self.individuals[0].chromosome)
+            new_generation.append(Individual(child))
+        else:
+            if rnd <= 0.5:
+                new_generation.append(self.individuals[-1])
+            else:
+                new_generation.append(self.individuals[0])
+
+        self.individuals = new_generation
 
     def mutation(self):
-        self.individuals[0] = Individual(mutations.rsm(self.individuals[0].chromosome))
+
+    def fittest(self):
+        elite = self.individuals[0]
+        elite_fitness = self.individuals[0].fitness()
+
+        for index in range(1, len(self.individuals)):
+            fitness = self.individuals[index].fitness()
+            if fitness < elite_fitness:
+                elite = self.individuals[index]
+                elite_fitness = fitness
+        return elite
+
+    def __str__(self):
+        individuals = []
+        for ind in self.individuals:
+            individuals.append(ind.__str__())
+        return '\n'.join(individuals)

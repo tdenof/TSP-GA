@@ -1,17 +1,20 @@
 import random
+from gene import Gene
 
 
 def aox(l1, l2):
     n = len(l1)
-    child = [None] * n
+    child = [Gene()] * n
     x = random.randint(0, n - 1)
     y = random.randint(0, n - 1)
     if x == y:
         y = x+1
     i, j = sorted([x, y])
+
     child[i:j] = l1[i:j]
+
     for r in range(0, n):
-        if child[r] is None:
+        if child[r].name is None:
             if l2[r] not in child[0:n]:
                 child[r] = l2[r]
             else:
@@ -50,11 +53,3 @@ def ox(l1, l2):
 
 def ox_2(l1,l2):
     return ox(l1, l2), ox(l2, l1)
-
-
-t1 = ['Q', 'B', 'C', 'A', 'D', 'Z', 'X', 'P', 'T', 'W']
-t2 = ['A', 'B', 'C', 'D', 'X', 'Z', 'W', 'T', 'P', 'Q']
-
-
-for i in range(100):
-    print aox_2(t1, t1)
