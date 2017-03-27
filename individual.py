@@ -1,14 +1,9 @@
-import numpy as np
-import random
+from gene import Gene
 
 
 class Individual:
 
-    cities = []
-    distances = np.matrix('')
-    indexes = {}
-
-    def __init__(self, chromosome):
+    def __init__(self, chromosome=[]):
         self.chromosome = chromosome
 
     @staticmethod
@@ -18,18 +13,15 @@ class Individual:
         Individual.indexes = dict(zip(cities, range(len(cities))))
 
     def fitness(self):
-        distance = 0
+        distance = self.chromosome[0].distance(Gene.init_gene) + self.chromosome[-1].distance(Gene.init_gene)
         for i in range(len(self.chromosome) - 1):
-            distance += Individual.distances[Individual.indexes[self.chromosome[i]],
-                                             Individual.indexes[self.chromosome[i + 1]]]
+            distance += self.chromosome[i].distance(self.chromosome[i+1])
         return distance
 
-    def selected(self, fitness_sum):
-        probability = float(self.fitness())/fitness_sum
-        rnd = random.random()
-        print probability
-        print rnd
-        if probability <= rnd:
-            return True
-        else:
-            return False
+    def __str__(self):
+        cities = []
+        for gene in self.chromosome:
+            cities.append(gene.__str__())
+        return str(cities)+', fitness : '+str(self.fitness())
+
+

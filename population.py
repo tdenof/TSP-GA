@@ -1,5 +1,6 @@
 import random
 import copy
+import numpy as np
 import crossovers
 import mutations
 from individual import Individual
@@ -7,11 +8,14 @@ from individual import Individual
 
 class Population:
 
+    cp = 0.9
+    mp = 0.015
+
     def __init__(self, individual, size=None):
         self.individuals = []
         chromosome = copy.copy(individual.chromosome)
         if size is None:
-            self.size = len(individual.chromosome)
+            self.size = len(chromosome) + 1
         else:
             self.size = size
         while len(self.individuals) < self.size:
@@ -34,6 +38,7 @@ class Population:
         return roulette
 
     def selection(self):
+
         selected_individuals = []
         while len(selected_individuals) < self.size/2:
             roulette = self.roulette()

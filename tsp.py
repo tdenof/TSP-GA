@@ -1,37 +1,20 @@
-import numpy as np
 import csv
 from individual import Individual
 from population import Population
+from gene import Gene
 
 
-cities = []
-indexes = {}
-distances = []
+chromosome = []
 with open('dataset.csv') as datasetFile:
-    dataset = csv.reader(datasetFile, delimiter='\t')
-    cities = dataset.next()[1:]
-    indexes = dict(zip(cities, range(len(cities))))
+    dataset = csv.reader(datasetFile, delimiter=',')
+    line = dataset.next()
+    init_city = Gene(line[0], int(line[1]), int(line[2]))
+    Gene.init(init_city)
     for row in dataset:
-        distances.append(map(lambda data: int(data), row[1:]))
-    distances = np.matrix(distances)
+        chromosome.append(Gene(row[0], int(row[1]), int(row[2])))
 
+individual = Individual(chromosome)
+print individual
 
-print cities
-print distances
-print indexes
-
-individual = Individual(cities)
-Individual.init(cities, distances)
-
-population = Population(individual)
-print individual.chromosome
-print individual.fitness()
-print map(lambda instance: instance.fitness(), population.individuals)
-fitness_sum = population.fitness_sum()
-print fitness_sum
-print map(lambda instance: instance.chromosome, population.individuals)
-population.selection()
-print map(lambda instance: instance.chromosome, population.individuals)
-population.crossover(0.75)
-# population.mutation()
-print map(lambda instance: instance.chromosome, population.individuals)
+population = Population(individual, 50)
+print population
