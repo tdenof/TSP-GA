@@ -18,3 +18,27 @@ print individual
 
 population = Population(individual, 50)
 print population
+
+elite = population.fittest()
+
+print "Elite is : ", elite
+elite.plot(0)
+j = 0
+for iteration in range(0, 151):
+    population.selection()
+
+    population.crossover()
+
+    population.mutation()
+
+    print iteration
+    if j == 10:
+        elite = population.fittest()
+        elite.plot(iteration)
+        j = 0
+    j += 1
+
+print population
+elite = population.fittest()
+print "Elite is : ", elite
+elite.plot(iteration, True)
