@@ -40,14 +40,31 @@ class Population:
     def selection(self):
 
         selected_individuals = []
-        while len(selected_individuals) < self.size/2:
+        fitness_mean = np.mean([indiv.fitness() for indiv in self.individuals])
+
+        for ind in self.individuals:
+            ind.set_quorem(fitness_mean)
+        population_bis = copy.deepcopy(self)
+
+        for i in range(self.size):
             roulette = self.roulette()
             rnd = random.random()
             for index, value in enumerate(roulette):
                 if rnd <= value:
-                    selected_individuals.append(self.individuals[index])
+                    for j in range(self.individuals[index].quotient):
+                        selected_individuals.append(self.individuals[index])
                     self.individuals.pop(index)
                     break
+
+        cpt = 0
+        while len(selected_individuals) < population_bis.size:
+            rnd_list = random.randint(0, len(population_bis.individuals) - 1)
+            rnd_remain = random.random()
+            if population_bis.individuals[rnd_list].remainder >= rnd_remain or cpt >= 10:
+                selected_individuals.append(population_bis.individuals[rnd_list])
+                population_bis.individuals.pop(rnd_list)
+            cpt += 1
+
         self.individuals = selected_individuals
 
     def crossover(self, pc):

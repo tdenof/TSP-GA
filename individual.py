@@ -5,6 +5,8 @@ class Individual:
 
     def __init__(self, chromosome=[]):
         self.chromosome = chromosome
+        self.quotient = 0
+        self.remainder = 0
 
     @staticmethod
     def init(cities, distances):
@@ -17,6 +19,10 @@ class Individual:
         for i in range(len(self.chromosome) - 1):
             distance += self.chromosome[i].distance(self.chromosome[i+1])
         return distance
+
+    def set_quorem(self, mean):
+        self.quotient = int(mean/self.fitness())
+        self.remainder = mean/self.fitness() - self.quotient
 
     def __str__(self):
         cities = []
