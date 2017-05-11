@@ -2,6 +2,14 @@
 Solve the travel salesman problem using genetical algorithm
 
 The code is compatible with ***Python 2.7***.  
+
+## Dependencies
+The program needs the `matplolib` library to work.
+The common way to install it for Linux/macOS/Windows is to use `pip`.
+
+    $ pip install matplotlib
+    
+## Usage  
 ```
 usage: tsp.py [-h] [-s SIZE] [-i ITERATION] [--cp Probability]
               [--mp Probability] [-f FILE] [-p FREQUENCY] [-v]
