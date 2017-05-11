@@ -38,12 +38,13 @@ class Population:
         return roulette
 
     def selection(self):
-
-        selected_individuals = []
+        fittest = self.fittest()
+        selected_individuals = [fittest]
         fitness_mean = np.mean([indiv.fitness() for indiv in self.individuals])
 
         for ind in self.individuals:
             ind.set_quorem(fitness_mean)
+        fittest.quotient -= 1
         population_bis = copy.deepcopy(self)
 
         for i in range(self.size):

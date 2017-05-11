@@ -12,7 +12,6 @@ with open('dataset.csv') as datasetFile:
     Gene.init(init_city)
     for row in dataset:
         chromosome.append(Gene(row[0], int(row[1]), int(row[2])))
-
 individual = Individual(chromosome)
 print individual
 
