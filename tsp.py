@@ -14,6 +14,7 @@ with open('dataset.csv') as datasetFile:
         chromosome.append(Gene(row[0], int(row[1]), int(row[2])))
 individual = Individual(chromosome)
 print individual
+individual.plot_cities()
 
 population = Population(individual, 50)
 print population
@@ -21,7 +22,7 @@ print population
 elite = population.fittest()
 
 print "Elite is : ", elite
-elite.plot(0)
+elite.plot_paths(0)
 j = 0
 for iteration in range(0, 151):
     population.selection()
@@ -33,11 +34,11 @@ for iteration in range(0, 151):
     print iteration
     if j == 10:
         elite = population.fittest()
-        elite.plot(iteration)
+        elite.plot_paths(iteration)
         j = 0
     j += 1
 
 print population
 elite = population.fittest()
 print "Elite is : ", elite
-elite.plot(iteration, True)
+elite.plot_paths(iteration, True)
