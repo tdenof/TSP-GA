@@ -93,4 +93,4 @@ if verbose:
 
 print "Elite found on iteration : ", best_iteration
 print "Elite is : ", best_individual
-best_individual.plot_paths(best_iteration, True)
+best_individual.plot_paths(iteration, True, best_iteration)

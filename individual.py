@@ -40,7 +40,7 @@ class Individual:
         # Ignore matplotlib warnings related to GUI
         warnings.filterwarnings("ignore", ".*GUI.*")
 
-    def plot_paths(self, iteration, block=False):
+    def plot_paths(self, iteration, block=False, best_iteration=None):
 
         x = [Gene.init_gene.x]
         y = [Gene.init_gene.y]
@@ -54,7 +54,12 @@ class Individual:
             plt.arrow(x[coord], y[coord], (x[(coord+1) % n] - x[coord]), (y[(coord+1) % n] - y[coord]), color='r',
                       length_includes_head=True, head_width=0, width=0.001)
 
-        plt.suptitle('Iteration : '+str(iteration)+' - Fitness : '+str(self.fitness()), fontsize=12)
+        if not best_iteration:
+            suptitle = 'Iteration : '+str(iteration)+' - Fitness : '+str(self.fitness())
+        else:
+            suptitle = 'Elite found on iteration : ' + str(best_iteration) + ' - Fitness : '+str(self.fitness()) \
+                        + '\n' + 'Finished, Close this window to stop the program.'
+        plt.suptitle(suptitle, fontsize=12)
 
         plt.show(block)
         plt.pause(0.1)
