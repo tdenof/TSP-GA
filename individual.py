@@ -1,3 +1,4 @@
+import warnings
 from gene import Gene
 from matplotlib import pyplot as plt
 
@@ -32,8 +33,12 @@ class Individual:
         for gene in self.chromosome:
             x.append(gene.x)
             y.append(gene.y)
+            plt.annotate(gene.name, xy=(gene.x, gene.y), xytext=(5, 5), textcoords='offset points')
 
         plt.plot(x, y, 'co')
+
+        # Ignore matplotlib warnings related to GUI
+        warnings.filterwarnings("ignore", ".*GUI.*")
 
     def plot_paths(self, iteration, block=False):
 
@@ -43,7 +48,6 @@ class Individual:
         for gene in self.chromosome:
             x.append(gene.x)
             y.append(gene.y)
-            plt.annotate(gene.name, xy=(gene.x, gene.y), xytext=(5, 5), textcoords='offset points')
 
         n = len(x)
         for coord in range(len(x)):
