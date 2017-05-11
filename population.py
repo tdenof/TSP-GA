@@ -9,7 +9,12 @@ from individual import Individual
 class Population:
 
     cp = 0.9
-    mp = 0.015
+    mp = 0.05
+
+    @staticmethod
+    def init_probabilities(cp, mp):
+        Population.cp = cp
+        Population.mp = mp
 
     def __init__(self, individual, size=None):
         self.individuals = []
