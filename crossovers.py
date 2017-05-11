@@ -33,21 +33,21 @@ def aox_2(l1, l2):
 
 def ox(l1, l2):
     n = len(l1)
-    child = [None] * n
     x = random.randint(0, n - 1)
     y = random.randint(0, n - 1)
     if x == y:
         y = x + 1
     i, j = sorted([x, y])
-    child = list(l2)
+    childi = l2[j:]+l2[:j]
+    child = [None]*n
+    child[i:j]=l1[i:j]
+
+    f = 0
     for r in range(0,n):
-        if child[r] in l1[i:j]:
-            child[r] = None
-    child = child[i:n] + child[0:i]
-    indexes = [aux for aux in range(n) if child[aux] is None]
-    for k in range(len(indexes)):
-        child.remove(None)
-    child = child[0:i] + l1[i:j] + child[i:n]
+        if childi[r] not in l1[i:j]:
+            child[(j+r-f) % n] = childi[r]
+        else:
+            f += 1
     return child
 
 
